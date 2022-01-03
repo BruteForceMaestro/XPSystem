@@ -19,7 +19,7 @@ namespace XPSystem
 
         public void OnKill(DyingEventArgs ev)
         {
-            if (ev.IsAllowed && ev.Killer != null && ev.Target != null && !ev.Killer.DoNotTrack)
+            if (ev.IsAllowed && ev.Killer != null && ev.Target != null)
             {
                 Dictionary<RoleType, int> role;
                 if (Main.Instance.Config.KillXP.TryGetValue(ev.Killer.Role, out role))

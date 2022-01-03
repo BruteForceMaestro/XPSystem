@@ -11,6 +11,10 @@ namespace XPSystem
     {
         static public void AddXP(Player player, int xp)
         {
+            if (player.DoNotTrack)
+            {
+                return;
+            }
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             bool levelUp = false;
             log.XP += xp;
