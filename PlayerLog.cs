@@ -1,5 +1,8 @@
-﻿namespace XPSystem
+﻿using System;
+
+namespace XPSystem
 {
+    [Serializable]
     public class PlayerLog
     {
         public PlayerLog(string USERID, int lvl, int xp, string OLDBADGE)

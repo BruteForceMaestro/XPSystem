@@ -2,7 +2,6 @@
 using MEC;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace XPSystem
@@ -34,7 +33,7 @@ namespace XPSystem
             {
                 player.ShowHint($"+ <color=green>{xp}</color> XP");
             }
-            File.WriteAllText(Main.path, JsonSerializer.Serialize(Main.players));
+            Binary.WriteToBinaryFile(Main.path, Main.players);
         }
         static public IEnumerator<float> EvaluateRank(Player player)
         {
@@ -51,7 +50,7 @@ namespace XPSystem
                     Main.players.Add(new PlayerLog(player.UserId, 0, 0, player.Group.BadgeText));
                 }
             }
-            File.WriteAllText(Main.path, JsonSerializer.Serialize(Main.players));
+            Binary.WriteToBinaryFile(Main.path, Main.players);
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             string badge = GetLVLBadge(player);
             string color = Regex.Match(badge, @"(?<=%).*(?=%)").Value;
