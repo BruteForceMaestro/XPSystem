@@ -43,11 +43,11 @@ namespace XPSystem
 
 
 
-        public void OnRoundEnd(EndingRoundEventArgs ev)
+        public void OnRoundEnd(RoundEndedEventArgs ev)
         {
             foreach (Player player in Player.List)
             {
-                if (player.LeadingTeam == ev.LeadingTeam && ev.IsAllowed && !Round.IsLocked)
+                if (player.LeadingTeam == ev.LeadingTeam && player.Role != RoleType.Spectator)
                 {
                     API.AddXP(player, Main.Instance.Config.TeamWinXP);
                 }

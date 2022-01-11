@@ -28,7 +28,7 @@ namespace XPSystem
             handlers = new();
             Player.Verified += handlers.OnJoined;
             Player.Dying += handlers.OnKill;
-            Server.EndingRound += handlers.OnRoundEnd;
+            Server.RoundEnded += handlers.OnRoundEnd;
             Player.Escaping += handlers.OnEscape;
             Instance = this;
             GetOrCreateJson();
@@ -40,7 +40,7 @@ namespace XPSystem
             handlers = null;
             Player.Verified -= handlers.OnJoined;
             Player.Dying -= handlers.OnKill;
-            Server.EndingRound -= handlers.OnRoundEnd;
+            Server.RoundEnded -= handlers.OnRoundEnd;
             Player.Escaping -= handlers.OnEscape;
             base.OnDisabled();
         }
