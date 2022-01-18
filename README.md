@@ -2,13 +2,14 @@
  A basic, customisable XP and LVL system for SCP: SL.
 ## Config
 ```
-is_enabled: true
+x_p_system:
+  is_enabled: true
   # Hint shown to the players if they have DNT enabled.
   d_n_t_hint: We can't track your stats while you have DNT enabled in your game options!
   # (You may add your own entries) Role1: Role2: XP player with Role1 gets for killing a person with Role2 
   kill_x_p:
     ClassD:
-      Scientist: 200 (this means a classd gets 200 xp for killing a scientist)
+      Scientist: 200
       FacilityGuard: 150
       NtfPrivate: 200
       NtfSergeant: 250
@@ -56,6 +57,8 @@ is_enabled: true
     50: Nerd %purple%
   # The structure of the badge displayed in-game. Variables: %lvl% - the level. %badge% earned badge in specified in LevelsBadge. %oldbadge% - base-game badge, like ones specified in config-remoteadmin, or a global badge. can be null.
   badge_structure: (LVL %lvl% | %badge%) %oldbadge%
+  # Path files get saved to. Requires change on linux.
+  save_path: (Exiled folder on windows.)
 ```
 ## Commands
 ```
