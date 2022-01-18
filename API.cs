@@ -33,7 +33,7 @@ namespace XPSystem
             {
                 player.ShowHint($"+ <color=green>{xp}</color> XP");
             }
-            Binary.WriteToBinaryFile(Main.path, Main.players);
+            Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
         }
         static public IEnumerator<float> EvaluateRank(Player player)
         {
@@ -50,7 +50,7 @@ namespace XPSystem
                     Main.players.Add(new PlayerLog(player.UserId, 0, 0, player.Group.BadgeText));
                 }
             }
-            Binary.WriteToBinaryFile(Main.path, Main.players);
+            Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             string badge = GetLVLBadge(player);
             string color = Regex.Match(badge, @"(?<=%).*(?=%)").Value;

@@ -11,16 +11,15 @@ namespace XPSystem
     {
         public static Main Instance { get; set; }
         private EventHandlers handlers = new();
-        public static readonly string path = Environment.ExpandEnvironmentVariables(@"%AppData%\EXILED\Players.bin");
         public static List<PlayerLog> players = new List<PlayerLog>();
 
         private void GetOrCreateJson()
         {
-            if (!File.Exists(path))
+            if (!File.Exists(Main.Instance.Config.SavePath))
             {
-                Binary.WriteToBinaryFile(path, players);
+                Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, players);
             };
-            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(path);
+            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Main.Instance.Config.SavePath);
             if (players == null) { players = new List<PlayerLog>(); }
         }
         public override void OnEnabled()
