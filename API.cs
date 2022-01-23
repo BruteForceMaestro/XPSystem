@@ -50,8 +50,12 @@ namespace XPSystem
                     Main.players.Add(new PlayerLog(player.UserId, 0, 0, player.Group.BadgeText));
                 }
             }
-            Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
+            if (player.Group != null)
+            {
+                log.OldBadge = player.Group.BadgeText;
+            }
+            Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
             string badge = GetLVLBadge(player);
             string color = Regex.Match(badge, @"(?<=%).*(?=%)").Value;
             badge = Regex.Replace(badge, @"%.*%", string.Empty);

@@ -1,5 +1,4 @@
 ﻿using Exiled.API.Features;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Player = Exiled.Events.Handlers.Player;
@@ -15,9 +14,9 @@ namespace XPSystem
 
         private void GetOrCreateJson()
         {
-            if (!File.Exists(Main.Instance.Config.SavePath))
+            if (!File.Exists(Instance.Config.SavePath))
             {
-                Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, players);
+                Binary.WriteToBinaryFile(Instance.Config.SavePath, players);
             };
             players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Main.Instance.Config.SavePath);
             if (players == null) { players = new List<PlayerLog>(); }
