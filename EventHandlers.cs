@@ -28,7 +28,7 @@ namespace XPSystem
                 API.AddXP(ev.Killer, xp);
                 return;
             }
-            if (ev.Handler.Type != Exiled.API.Enums.DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
+            if (ev.Handler.Type == Exiled.API.Enums.DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
             {
                 foreach (Player scp106 in Player.Get(RoleType.Scp106))
                 {
