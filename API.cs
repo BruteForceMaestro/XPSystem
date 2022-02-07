@@ -1,8 +1,6 @@
 ﻿using Exiled.API.Features;
 using MEC;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
 
 namespace XPSystem
 {
@@ -25,7 +23,7 @@ namespace XPSystem
                 Timing.RunCoroutine(EvaluateRank(player));
                 if (Main.Instance.Config.ShowAddedLVL)
                 {
-                    string hint = Regex.Replace(Main.Instance.Config.AddedLVLHint, @"%level%", log.LVL.ToString());
+                    string hint = Regexes.level.Replace(Main.Instance.Config.AddedLVLHint, log.LVL.ToString());
                     player.ShowHint(hint);
                 }
             }
@@ -57,12 +55,8 @@ namespace XPSystem
             }
             Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
             string badge = GetLVLBadge(player);
-            string color = Regex.Match(badge, @"(?<=%).*(?=%)").Value;
-            badge = Regex.Replace(badge, @"%.*%", string.Empty);
-            string replaced = Regex.Replace(Main.Instance.Config.BadgeStructure, "%lvl%", log.LVL.ToString());
-            replaced = Regex.Replace(replaced, "%badge%", badge.Trim());
-            replaced = Regex.Replace(replaced, "%oldbadge%", log.OldBadge.Trim());
-            player.RankName = replaced;
+            string color = Regexes.colorFind.Match(badge).Value;
+            player.RankName = Regexes.FindBadge(badge, log);
             player.RankColor = color;
         }
         static private string GetLVLBadge(Player player)

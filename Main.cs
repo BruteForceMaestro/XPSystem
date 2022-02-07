@@ -9,7 +9,7 @@ namespace XPSystem
     public class Main : Plugin<Config>
     {
         public static Main Instance { get; set; }
-        private EventHandlers handlers = new();
+        private EventHandlers handlers;
         public static List<PlayerLog> players = new List<PlayerLog>();
 
         private void GetOrCreateJson()
@@ -23,7 +23,7 @@ namespace XPSystem
         }
         public override void OnEnabled()
         {
-            handlers = new();
+            handlers = new EventHandlers();
             Player.Verified += handlers.OnJoined;
             Player.Dying += handlers.OnKill;
             Server.RoundEnded += handlers.OnRoundEnd;
@@ -35,11 +35,11 @@ namespace XPSystem
 
         public override void OnDisabled()
         {
-            handlers = null;
             Player.Verified -= handlers.OnJoined;
             Player.Dying -= handlers.OnKill;
             Server.RoundEnded -= handlers.OnRoundEnd;
             Player.Escaping -= handlers.OnEscape;
+            handlers = null;
             base.OnDisabled();
         }
     }

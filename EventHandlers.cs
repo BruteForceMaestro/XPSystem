@@ -1,7 +1,7 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using MEC;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace XPSystem
 {
@@ -19,38 +19,34 @@ namespace XPSystem
 
         public void OnKill(DyingEventArgs ev)
         {
-            if (ev.IsAllowed && ev.Killer != null && ev.Target != null)
+            if (ev.Target == null)
             {
-                Dictionary<RoleType, int> role;
-                if (Main.Instance.Config.KillXP.TryGetValue(ev.Killer.Role, out role))
+                return;
+            }
+            if (ev.Killer != null && Main.Instance.Config.KillXP.TryGetValue(ev.Killer.Role, out var role) && role.TryGetValue(ev.Target.Role, out var xp))
+            {
+                API.AddXP(ev.Killer, xp);
+                return;
+            }
+            if (ev.Handler.Type != Exiled.API.Enums.DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
+            {
+                foreach (Player scp106 in Player.Get(RoleType.Scp106))
                 {
-                    int xp;
-                    if (role.TryGetValue(ev.Target.Role, out xp))
-                    {
-                        API.AddXP(ev.Killer, xp);
-                    }
+                    API.AddXP(scp106, xp1);
                 }
             }
         }
 
         public void OnEscape(EscapingEventArgs ev)
         {
-            if (ev.IsAllowed)
-            {
-                API.AddXP(ev.Player, Main.Instance.Config.EscapeXP[ev.Player.Role]);
-            }
+            API.AddXP(ev.Player, Main.Instance.Config.EscapeXP[ev.Player.Role]);
         }
-
-
 
         public void OnRoundEnd(RoundEndedEventArgs ev)
         {
-            foreach (Player player in Player.List)
+            foreach (Player player in Player.List.Where(x => x.LeadingTeam == ev.LeadingTeam))
             {
-                if (player.LeadingTeam == ev.LeadingTeam && player.Role != RoleType.Spectator)
-                {
-                    API.AddXP(player, Main.Instance.Config.TeamWinXP);
-                }
+                API.AddXP(player, Main.Instance.Config.TeamWinXP);
             }
         }
     }
