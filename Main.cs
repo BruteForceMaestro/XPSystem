@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Player = Exiled.Events.Handlers.Player;
@@ -9,6 +10,7 @@ namespace XPSystem
     public class Main : Plugin<Config>
     {
         public static Main Instance { get; set; }
+        public override Version Version { get; } = new Version(1, 0, 5);
         private EventHandlers handlers;
         public static List<PlayerLog> players = new List<PlayerLog>();
 
