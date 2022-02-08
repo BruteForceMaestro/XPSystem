@@ -1,7 +1,7 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs;
-using MEC;
 using System.Linq;
+using MEC;
 
 namespace XPSystem
 {
@@ -14,7 +14,7 @@ namespace XPSystem
                 ev.Player.OpenReportWindow(Main.Instance.Config.DNTHint);
                 return;
             }
-            Timing.RunCoroutine(API.EvaluateRank(ev.Player));
+            Timing.CallDelayed(0.15f, () => API.EvaluateRank(ev.Player));
         }
 
         public void OnKill(DyingEventArgs ev)

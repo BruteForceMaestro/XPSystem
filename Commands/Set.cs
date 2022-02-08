@@ -1,6 +1,5 @@
 ﻿using CommandSystem;
 using Exiled.API.Features;
-using MEC;
 using Exiled.Permissions.Extensions;
 using System;
 
@@ -46,7 +45,8 @@ namespace XPSystem
             {
                 player.LVL = lvl;
                 response = $"{player.UserId}'s LVL is now {player.LVL}";
-                Timing.RunCoroutine(API.EvaluateRank(Player.Get(player.UserId)));
+                API.EvaluateRank(Player.Get(player.UserId));
+                Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
                 return true;
             }
             else
@@ -54,6 +54,6 @@ namespace XPSystem
                 response = $"Invalid amount of LVLs : {lvl}";
                 return false;
             }
-        } 
+        }
     }
 }
