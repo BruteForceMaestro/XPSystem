@@ -27,17 +27,13 @@ namespace XPSystem
                 response = "Usage : XPSystem get (userid)";
                 return false;
             }
-            PlayerLog player = Main.players.Find(x => x.UserId == arguments.At(0));
-            if (player == default(PlayerLog))
+            var byId = Player.Get(arguments.At(0));
+            if (byId == null)
             {
-                var byId = Player.Get(arguments.At(0));
-                if (byId == null)
-                {
-                    response = "Invalid UserId or the player hasn't joined the server yet.";
-                    return false;
-                }
-                player = Main.players.Find(x => x.UserId == byId.UserId);
+                response = "Invalid UserId or the player hasn't joined the server yet.";
+                return false;
             }
+            PlayerLog player = Main.players.Find(x => x.UserId == byId.UserId);
             response = $"UserId: {player.UserId} | LVL: {player.LVL} | XP: {player.XP}";
             return true;
         }
