@@ -30,9 +30,10 @@ namespace XPSystem
             }
             if (ev.Handler.Type == Exiled.API.Enums.DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
             {
-                foreach (Player scp106 in Player.Get(RoleType.Scp106))
+                var scp106s = Player.Get(RoleType.Scp106).FirstOrDefault();
+                if (scp106s != null) // reason this is not in the if statement above is because it would be needlessly iterating over the whole player list
                 {
-                    API.AddXP(scp106, xp1);
+                    API.AddXP(scp106s, xp1);
                 }
             }
         }
@@ -44,9 +45,12 @@ namespace XPSystem
 
         public void OnRoundEnd(RoundEndedEventArgs ev)
         {
-            foreach (Player player in Player.List.Where(x => x.LeadingTeam == ev.LeadingTeam))
+            foreach (Player player in Player.List)
             {
-                API.AddXP(player, Main.Instance.Config.TeamWinXP);
+                if (player.LeadingTeam == ev.LeadingTeam)
+                {
+                    API.AddXP(player, Main.Instance.Config.TeamWinXP);
+                }
             }
         }
     }

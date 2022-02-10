@@ -10,7 +10,8 @@ namespace XPSystem
     public class Main : Plugin<Config>
     {
         public static Main Instance { get; set; }
-        public override Version Version { get; } = new Version(1, 0, 5);
+        public override Version Version { get; } = new Version(1, 0, 6);
+        public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
         private EventHandlers handlers;
         public static List<PlayerLog> players = new List<PlayerLog>();
 
@@ -20,7 +21,7 @@ namespace XPSystem
             {
                 Binary.WriteToBinaryFile(Instance.Config.SavePath, players);
             };
-            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Main.Instance.Config.SavePath);
+            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Instance.Config.SavePath);
             if (players == null) { players = new List<PlayerLog>(); }
         }
         public override void OnEnabled()

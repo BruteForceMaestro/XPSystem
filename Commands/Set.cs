@@ -30,22 +30,18 @@ namespace XPSystem
                 response = usage;
                 return false;
             }
-            PlayerLog player = Main.players.Find(x => x.UserId == arguments.At(0));
-            if (player == default(PlayerLog))
+            var byId = Player.Get(arguments.At(0));
+            if (byId == null)
             {
-                var byId = Player.Get(arguments.At(0));
-                if (byId == null)
-                {
-                    response = "Invalid UserId or the player hasn't joined the server yet.";
-                    return false;
-                }
-                player = Main.players.Find(x => x.UserId == byId.UserId);
+                response = "Invalid UserId or the player hasn't joined the server yet.";
+                return false;
             }
+            PlayerLog player = Main.players.Find(x => x.UserId == byId.UserId);
             if (int.TryParse(arguments.At(1), out int lvl) && lvl >= 0)
             {
                 player.LVL = lvl;
                 response = $"{player.UserId}'s LVL is now {player.LVL}";
-                API.EvaluateRank(Player.Get(player.UserId));
+                API.EvaluateRank(byId);
                 Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
                 return true;
             }

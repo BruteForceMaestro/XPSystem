@@ -1,5 +1,4 @@
 ﻿using Exiled.API.Features;
-using System.Collections.Generic;
 
 namespace XPSystem
 {
@@ -13,63 +12,46 @@ namespace XPSystem
             }
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             log.XP += xp;
-            bool lvlUp = false;
-            while (log.XP >= Main.Instance.Config.XPPerLevel)
+            if (log.XP >= Main.Instance.Config.XPPerLevel)
             {
-                log.LVL += 1;
-                log.XP -= Main.Instance.Config.XPPerLevel;
-                lvlUp = true;
+                log.LVL += log.XP / Main.Instance.Config.XPPerLevel;
+                log.XP -= log.XP % Main.Instance.Config.XPPerLevel;
                 if (Main.Instance.Config.ShowAddedLVL)
                 {
-                    string hint = Regexes.level.Replace(Main.Instance.Config.AddedLVLHint, log.LVL.ToString());
-                    player.ShowHint(hint);
+                    player.ShowHint(Regexes.level.Replace(Main.Instance.Config.AddedLVLHint, log.LVL.ToString()));
                 }
             }
-            if (Main.Instance.Config.ShowAddedXP && xp > 0 && !lvlUp)
+            else if (Main.Instance.Config.ShowAddedXP && xp > 0)
             {
                 player.ShowHint($"+ <color=green>{xp}</color> XP");
             }
+
             EvaluateRank(player);
             Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
         }
         static public void EvaluateRank(Player player)
         {
+            string badgeText = player.Group == null ? string.Empty : player.Group.BadgeText;
             if (!Main.players.Exists(x => x.UserId == player.UserId))
             {
-                if (player.Group == null)
-                {
-                    Main.players.Add(new PlayerLog(player.UserId, 0, 0, string.Empty));
-                }
-                else
-                {
-                    Main.players.Add(new PlayerLog(player.UserId, 0, 0, player.Group.BadgeText));
-                }
+                Main.players.Add(new PlayerLog(player.UserId, 0, 0, badgeText));
             }
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
-            if (player.Group != null)
-            {
-                log.OldBadge = player.Group.BadgeText;
-            }
-            string badge = GetLVLBadge(player);
-            string color = Regexes.colorFind.Match(badge).Value;
+            log.OldBadge = badgeText;
+            string badge = GetLVLBadge(log);
             player.RankName = Regexes.FindBadge(badge, log);
-            player.RankColor = color;
+            player.RankColor = Regexes.colorFind.Match(badge).Value;
         }
-        static private string GetLVLBadge(Player player)
+        static private string GetLVLBadge(PlayerLog player)
         {
-            PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             string biggestLvl = string.Empty;
-            foreach (KeyValuePair<int, string> lvl in Main.Instance.Config.LevelsBadge)
+            foreach (var pair in Main.Instance.Config.LevelsBadge) // might seem ugly but this is actually O(n)
             {
-                if (log.LVL >= lvl.Key)
+                if (player.LVL <= pair.Key)
                 {
-                    biggestLvl = lvl.Value;
-                }
-                else
-                {
-
                     break;
                 }
+                biggestLvl = pair.Value;
             }
             return biggestLvl;
         }
