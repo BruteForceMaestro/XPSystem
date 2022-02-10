@@ -12,10 +12,11 @@ namespace XPSystem
             }
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             log.XP += xp;
-            if (log.XP >= Main.Instance.Config.XPPerLevel)
+            int lvlsGained = log.XP / Main.Instance.Config.XPPerLevel;
+            if (lvlsGained > 0)
             {
-                log.LVL += log.XP / Main.Instance.Config.XPPerLevel;
-                log.XP -= log.XP % Main.Instance.Config.XPPerLevel;
+                log.LVL += lvlsGained;
+                log.XP -= lvlsGained * Main.Instance.Config.XPPerLevel;
                 if (Main.Instance.Config.ShowAddedLVL)
                 {
                     player.ShowHint(Regexes.level.Replace(Main.Instance.Config.AddedLVLHint, log.LVL.ToString()));
@@ -47,7 +48,7 @@ namespace XPSystem
             string biggestLvl = string.Empty;
             foreach (var pair in Main.Instance.Config.LevelsBadge) // might seem ugly but this is actually O(n)
             {
-                if (player.LVL <= pair.Key)
+                if (player.LVL < pair.Key)
                 {
                     break;
                 }
