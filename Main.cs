@@ -15,14 +15,14 @@ namespace XPSystem
         private EventHandlers handlers;
         public static List<PlayerLog> players = new List<PlayerLog>();
 
-        private void GetOrCreateJson()
+        private void DeserializeBinary()
         {
             if (!File.Exists(Instance.Config.SavePath))
             {
                 Binary.WriteToBinaryFile(Instance.Config.SavePath, players);
-            };
-            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Instance.Config.SavePath);
-            if (players == null) { players = new List<PlayerLog>(); }
+                return;
+            }
+            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Instance.Config.SavePath) ?? new List<PlayerLog>();
         }
         public override void OnEnabled()
         {
@@ -32,7 +32,7 @@ namespace XPSystem
             Server.RoundEnded += handlers.OnRoundEnd;
             Player.Escaping += handlers.OnEscape;
             Instance = this;
-            GetOrCreateJson();
+            DeserializeBinary();
             base.OnEnabled();
         }
 
