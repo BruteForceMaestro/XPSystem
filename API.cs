@@ -14,21 +14,19 @@ namespace XPSystem
             PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
             log.XP += xp;
             int lvlsGained = log.XP / Main.Instance.Config.XPPerLevel;
-            StringBuilder hint = new StringBuilder();
-            if (Main.Instance.Config.ShowAddedXP)
-            {
-                hint.Append($"+ <color=green>").Append(xp).Append("</color> XP");
-            }
             if (lvlsGained > 0)
             {
                 log.LVL += lvlsGained;
                 log.XP -= lvlsGained * Main.Instance.Config.XPPerLevel;
                 if (Main.Instance.Config.ShowAddedLVL)
                 {
-                    hint.Append("\n").Append(Regexes.level.Replace(Main.Instance.Config.AddedLVLHint, log.LVL.ToString()));
+                    player.ShowHint(Regexes.level.Replace(Main.Instance.Config.AddedLVLHint, log.LVL.ToString()));
                 }
             }
-            player.ShowHint(hint.ToString());
+            else if (Main.Instance.Config.ShowAddedXP)
+            {
+                player.ShowHint($"+ <color=green>{xp}</color> XP");
+            }
             EvaluateRank(player);
             Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
         }
