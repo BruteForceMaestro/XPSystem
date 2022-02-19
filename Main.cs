@@ -19,10 +19,10 @@ namespace XPSystem
         {
             if (!File.Exists(Instance.Config.SavePath))
             {
-                Binary.WriteToBinaryFile(Instance.Config.SavePath, players);
+                YamlPly.Save();
                 return;
             }
-            players = Binary.ReadFromBinaryFile<Dictionary<string, PlayerLog>>(Instance.Config.SavePath) ?? new Dictionary<string, PlayerLog>();
+            YamlPly.Read();
         }
         public override void OnEnabled()
         {

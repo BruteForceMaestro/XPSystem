@@ -83,6 +83,6 @@ namespace XPSystem
         [Description("The structure of the badge displayed in-game. Variables: %lvl% - the level. %badge% earned badge in specified in LevelsBadge. %oldbadge% - base-game badge, like ones specified in config-remoteadmin, or a global badge. can be null.")]
         public string BadgeStructure { get; set; } = "(LVL %lvl% | %badge%) %oldbadge%";
         [Description("Path files get saved to. Requires change on linux.")]
-        public string SavePath { get; set; } = Path.Combine(Paths.Configs, @"Players.bin");
+        public string SavePath { get; set; } = Path.Combine(Paths.Configs, @"Players.yml");
     }
 }

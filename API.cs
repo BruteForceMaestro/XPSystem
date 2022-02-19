@@ -27,7 +27,6 @@ namespace XPSystem
                 player.ShowHint($"+ <color=green>{xp}</color> XP");
             }
             EvaluateRank(player);
-            Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
         }
         static public void EvaluateRank(Player player)
         {

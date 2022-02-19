@@ -42,7 +42,6 @@ namespace XPSystem
                 player.LVL = lvl;
                 response = $"{byId.UserId}'s LVL is now {player.LVL}";
                 API.EvaluateRank(byId);
-                Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
                 return true;
             }
             else

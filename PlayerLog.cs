@@ -5,6 +5,8 @@ namespace XPSystem
     [Serializable]
     public class PlayerLog
     {
+        public PlayerLog() { } // for yamldotnet
+        
         public PlayerLog(int lvl, int xp, string OLDBADGE)
         {
             LVL = lvl;

@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using Exiled.API.Enums;
 using System.Linq;
 using MEC;
 
@@ -28,7 +29,7 @@ namespace XPSystem
                 API.AddXP(ev.Killer, xp);
                 return;
             }
-            if (ev.Handler.Type == Exiled.API.Enums.DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
+            if (ev.Handler.Type == DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
             {
                 var scp106s = Player.Get(RoleType.Scp106).FirstOrDefault();
                 if (scp106s != null) // reason this is not in the if statement above is because it would be needlessly iterating over the whole player list
@@ -52,6 +53,7 @@ namespace XPSystem
                     API.AddXP(player, Main.Instance.Config.TeamWinXP);
                 }
             }
+            YamlPly.Save();
         }
     }
 }
