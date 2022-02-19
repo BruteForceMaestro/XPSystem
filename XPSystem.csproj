@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EXILED" Version="5.0.0-alpha.15" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\dependencies\0Harmony.dll</HintPath>
     </Reference>
@@ -25,30 +29,6 @@
     </Reference>
     <Reference Include="CommandSystem.Core">
       <HintPath>D:\SteamLibrary\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\CommandSystem.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.API">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\dependencies\Exiled.API.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CreditTags">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\Exiled.CreditTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CustomItems">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\Exiled.CustomItems.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CustomRoles">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\Exiled.CustomRoles.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Events">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\Exiled.Events.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Loader">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Exiled.Loader.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Permissions">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\Exiled.Permissions.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Updater">
-      <HintPath>..\..\..\..\Downloads\Exiled (4).tar\Exiled (4)\EXILED\Plugins\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
       <HintPath>..\..\exiled_ref\Mirror.dll</HintPath>

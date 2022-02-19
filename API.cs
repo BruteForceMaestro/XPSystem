@@ -10,7 +10,7 @@ namespace XPSystem
             {
                 return;
             }
-            PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
+            PlayerLog log = Main.players[player.UserId];
             log.XP += xp;
             int lvlsGained = log.XP / Main.Instance.Config.XPPerLevel;
             if (lvlsGained > 0)
@@ -32,11 +32,10 @@ namespace XPSystem
         static public void EvaluateRank(Player player)
         {
             string badgeText = player.Group == null ? string.Empty : player.Group.BadgeText;
-            PlayerLog log = Main.players.Find(x => x.UserId == player.UserId);
-            if (log == null)
+            if (!Main.players.TryGetValue(player.UserId, out PlayerLog log))
             {
-                log = new PlayerLog(player.UserId, 0, 0, badgeText);
-                Main.players.Add(log);
+                log = new PlayerLog(0, 0, badgeText);
+                Main.players[player.UserId] = log;
             }
             log.OldBadge = badgeText;
             string badge = GetLVLBadge(log);

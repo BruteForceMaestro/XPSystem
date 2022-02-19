@@ -13,7 +13,7 @@ namespace XPSystem
         public override Version Version { get; } = new Version(1, 0, 6);
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
         private EventHandlers handlers;
-        public static List<PlayerLog> players = new List<PlayerLog>();
+        public static Dictionary<string, PlayerLog> players = new Dictionary<string, PlayerLog>();
 
         private void DeserializeBinary()
         {
@@ -22,7 +22,7 @@ namespace XPSystem
                 Binary.WriteToBinaryFile(Instance.Config.SavePath, players);
                 return;
             }
-            players = Binary.ReadFromBinaryFile<List<PlayerLog>>(Instance.Config.SavePath) ?? new List<PlayerLog>();
+            players = Binary.ReadFromBinaryFile<Dictionary<string, PlayerLog>>(Instance.Config.SavePath) ?? new Dictionary<string, PlayerLog>();
         }
         public override void OnEnabled()
         {

@@ -44,13 +44,13 @@ namespace XPSystem
 
         private string GetTopPlayers(int amount)
         {
-            var sorted = Main.players.OrderByDescending(o => o.LVL);
+            var sorted = Main.players.OrderByDescending(o => o.Value.LVL);
             var players = sorted.Take(amount);
             string str = "";
             int index = 1;
-            foreach (PlayerLog player in players)
+            foreach (var log in players)
             {
-                str += $"{index}. ({player.UserId}) : LVL{player.LVL}, XP: {player.XP}\n";
+                str += $"{index}. ({log.Key}) : LVL{log.Value.LVL}, XP: {log.Value.XP}\n";
                 index++;
             }
             return str;

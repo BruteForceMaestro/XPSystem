@@ -36,11 +36,11 @@ namespace XPSystem
                 response = "Invalid UserId or the player hasn't joined the server yet.";
                 return false;
             }
-            PlayerLog player = Main.players.Find(x => x.UserId == byId.UserId);
+            PlayerLog player = Main.players[byId.UserId];
             if (int.TryParse(arguments.At(1), out int lvl) && lvl >= 0)
             {
                 player.LVL = lvl;
-                response = $"{player.UserId}'s LVL is now {player.LVL}";
+                response = $"{byId.UserId}'s LVL is now {player.LVL}";
                 API.EvaluateRank(byId);
                 Binary.WriteToBinaryFile(Main.Instance.Config.SavePath, Main.players);
                 return true;
