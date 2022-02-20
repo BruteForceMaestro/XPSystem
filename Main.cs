@@ -10,7 +10,7 @@ namespace XPSystem
     public class Main : Plugin<Config>
     {
         public static Main Instance { get; set; }
-        public override Version Version { get; } = new Version(1, 0, 6);
+        public override Version Version { get; } = new Version(1, 0, 7);
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
         private EventHandlers handlers;
         public static Dictionary<string, PlayerLog> players = new Dictionary<string, PlayerLog>();

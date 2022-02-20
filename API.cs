@@ -5,7 +5,7 @@ namespace XPSystem
 {
     static public class API
     {
-        public static Regex ColorFind { get; } = new Regex(@"(?<=%).*(?=%)", RegexOptions.Compiled);
+        static Regex colorFind = new Regex(@"(?<=%).*(?=%)", RegexOptions.Compiled);
         static public void AddXP(Player player, int xp)
         {
             if (player.DoNotTrack || xp <= 0)
@@ -23,28 +23,20 @@ namespace XPSystem
                 {
                     player.ShowHint(Main.Instance.Config.AddedLVLHint.Replace("%level%", log.LVL.ToString()));
                 }
-                EvaluateRank(player);
+                EvaluateRank(player, log);
             }
             else if (Main.Instance.Config.ShowAddedXP)
             {
                 player.ShowHint($"+ <color=green>{xp}</color> XP");
             }
         }
-        static public void EvaluateRank(Player player)
+        static public void EvaluateRank(Player player, PlayerLog log)
         {
             string badgeText = player.Group == null ? string.Empty : player.Group.BadgeText;
-            if (!Main.players.TryGetValue(player.UserId, out PlayerLog log))
-            {
-                log = new PlayerLog()
-                {
-                    LVL = 0,
-                    XP = 0
-                };
-                Main.players[player.UserId] = log;
-            }
             string badge = GetLVLBadge(log);
-            player.RankName = Main.Instance.Config.BadgeStructure.Replace("%lvl%", log.LVL.ToString()).Replace("%badge%", ColorFind.Replace(badge, string.Empty)).Replace("%oldbadge%", badgeText);
-            player.RankColor = ColorFind.Match(badge).Value;
+            string color = colorFind.Match(badge).Value;
+            player.RankName = Main.Instance.Config.BadgeStructure.Replace("%lvl%", log.LVL.ToString()).Replace("%badge%", badge.Replace($"%{color}%", string.Empty)).Replace("%oldbadge%", badgeText);
+            player.RankColor = color;
         }
         static private string GetLVLBadge(PlayerLog player)
         {

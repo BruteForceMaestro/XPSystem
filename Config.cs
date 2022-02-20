@@ -73,11 +73,11 @@ namespace XPSystem
         [Description("(You may add your own entries) Level threshold and a badge. %color%. if you get a TAG FAIL in your console, either change your color, or remove special characters like brackets.")]
         public Dictionary<int, string> LevelsBadge { get; set; } = new Dictionary<int, string>()
         {
-            [0] = "Visitor %cyan%",
-            [1] = "Junior %orange%",
-            [5] = "Senior %yellow%",
-            [10] = "Veteran %red%",
-            [50] = "Nerd %red%"
+            [0] = "Visitor%cyan%",
+            [1] = "Junior%orange%",
+            [5] = "Senior%yellow%",
+            [10] = "Veteran%red%",
+            [50] = "Nerd%lime%"
         };
 
         [Description("The structure of the badge displayed in-game. Variables: %lvl% - the level. %badge% earned badge in specified in LevelsBadge. %oldbadge% - base-game badge, like ones specified in config-remoteadmin, or a global badge. can be null.")]

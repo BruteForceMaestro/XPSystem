@@ -15,7 +15,13 @@ namespace XPSystem
                 ev.Player.OpenReportWindow(Main.Instance.Config.DNTHint);
                 return;
             }
-            Timing.CallDelayed(0.15f, () => API.EvaluateRank(ev.Player));
+            PlayerLog log = new PlayerLog()
+            {
+                LVL = 0,
+                XP = 0
+            };
+            Main.players[ev.Player.UserId] = log;
+            Timing.CallDelayed(0.15f, () => API.EvaluateRank(ev.Player, log));
         }
 
         public void OnKill(DyingEventArgs ev)
@@ -24,11 +30,7 @@ namespace XPSystem
             {
                 return;
             }
-            Player killer = ev.Killer;
-            if (ev.Handler.Type == DamageType.PocketDimension)
-            {
-                killer = Player.Get(RoleType.Scp106).FirstOrDefault();
-            }
+            Player killer = ev.Handler.Type == DamageType.PocketDimension ? Player.Get(RoleType.Scp106).FirstOrDefault() : ev.Killer;
             if (killer == null)
             {
                 return;

@@ -41,7 +41,7 @@ namespace XPSystem
             {
                 player.LVL = lvl;
                 response = $"{byId.UserId}'s LVL is now {player.LVL}";
-                API.EvaluateRank(byId);
+                API.EvaluateRank(byId, player);
                 return true;
             }
             else
