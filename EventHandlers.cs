@@ -24,18 +24,18 @@ namespace XPSystem
             {
                 return;
             }
-            if (ev.Killer != null && Main.Instance.Config.KillXP.TryGetValue(ev.Killer.Role, out var role) && role.TryGetValue(ev.Target.Role, out var xp))
+            Player killer = ev.Killer;
+            if (ev.Handler.Type == DamageType.PocketDimension)
             {
-                API.AddXP(ev.Killer, xp);
+                killer = Player.Get(RoleType.Scp106).FirstOrDefault();
+            }
+            if (killer == null)
+            {
                 return;
             }
-            if (ev.Handler.Type == DamageType.PocketDimension && Main.Instance.Config.KillXP.TryGetValue(RoleType.Scp106, out var xp106) && xp106.TryGetValue(ev.Target.Role, out var xp1))
+            if (LookUp(killer.Role, ev.Target.Role, out int xp))
             {
-                var scp106s = Player.Get(RoleType.Scp106).FirstOrDefault();
-                if (scp106s != null) // reason this is not in the if statement above is because it would be needlessly iterating over the whole player list
-                {
-                    API.AddXP(scp106s, xp1);
-                }
+                API.AddXP(killer, xp);
             }
         }
 
@@ -54,6 +54,17 @@ namespace XPSystem
                 }
             }
             YamlPly.Save();
+        }
+
+        public bool LookUp(RoleType killer, Exiled.API.Features.Roles.Role target, out int xp)
+        {
+            xp = 0;
+            if (Main.Instance.Config.KillXP.TryGetValue(killer, out var xp106) && xp106.TryGetValue(target, out var xp1))
+            {
+                xp = xp1;
+                return true;
+            }
+            return false;
         }
     }
 }

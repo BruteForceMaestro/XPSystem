@@ -15,7 +15,7 @@ namespace XPSystem
         private EventHandlers handlers;
         public static Dictionary<string, PlayerLog> players = new Dictionary<string, PlayerLog>();
 
-        private void DeserializeBinary()
+        private void Deserialize()
         {
             if (!File.Exists(Instance.Config.SavePath))
             {
@@ -32,7 +32,7 @@ namespace XPSystem
             Server.RoundEnded += handlers.OnRoundEnd;
             Player.Escaping += handlers.OnEscape;
             Instance = this;
-            DeserializeBinary();
+            Deserialize();
             base.OnEnabled();
         }
 
