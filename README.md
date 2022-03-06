@@ -1,4 +1,5 @@
 # XPSystem
+# This repository has moved to BruteForceMaestro/Progression
  A basic, customisable XP and LVL system for SCP: SL.
 ## Config
 ```
